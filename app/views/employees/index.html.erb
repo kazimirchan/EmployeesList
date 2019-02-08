@@ -1,0 +1,29 @@
+<% content_for :employees_list do %>
+  <% if @employees %>
+    <div class="my-3 card">
+      <div class="card-header">
+        <h6 class="my-1">Выберите сотрудника из списка ниже:</h6>
+      </div>
+      <ul class="list-group list-group-flush">
+        <% @employees.each do |empl| %>
+          <li class="list-group-item">
+            <a class="mb-0 small text-muted d-block" href="/employees/<%= empl.id %>">
+              <strong id="<%= empl.id %>" class="d-block text-gray-dark"><%= empl.name %></strong>
+              <span>ID сотрудника в базе - <%= empl.id %>;</span>
+              <br>
+              <span>Число подчиненных - nun</span>
+              <br>
+              <span>ИД босса - <%= empl.boss_id %></span>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% else %>
+    <div class="card border-danger mb-3">
+      <div class="card-body text-danger">
+        <p class="card-text">Сотрудники не найдены</p>
+      </div>
+    </div>
+  <% end %>
+<% end %>

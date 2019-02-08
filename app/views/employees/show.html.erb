@@ -1,0 +1,57 @@
+<% content_for :employee_assistants do %>
+  <% if @employee.present? %>
+    <p>
+      <strong>Title:</strong>
+      <%= @employee.id %>
+    </p>
+
+    <p>
+      <strong>Text:</strong>
+      <%= @employee.name %>
+    </p>
+    <% if @assistants.present? && @assistants.size > 0 %>
+      <% @assistants.each do |a| %>
+        <%= link_to a.name, remote: true, action: 'show', boss_id: a.id %>
+      <% end %>
+      <div id="test_div"></div>
+    <% else %>
+      <p>assistants array is empty now</p>
+    <% end %>
+  <% else %>
+    <p>error</p>
+  <% end %>
+<% end %>
+
+
+<% content_for :employees_list do %>
+  <% params.each do |par| %>
+    <span><%=par %></span>
+  <% end %>
+  <% if @employees %>
+    <div class="my-3 card">
+      <div class="card-header">
+        <h6 class="my-1">Выберите сотрудника из списка ниже:</h6>
+      </div>
+      <ul class="list-group list-group-flush">
+        <% @employees.each do |empl| %>
+          <li class="list-group-item<%= params[:id].to_i == empl.id ? ' active' : '' %>">
+            <a class="mb-0 small text-muted d-block" href="/employees/<%= empl.id %>">
+              <strong id="<%= empl.id %>" class="d-block text-gray-dark"><%= empl.name %></strong>
+              <span>ID сотрудника в базе - <%= empl.id %>;</span>
+              <br>
+              <span>Число подчиненных - nun</span>
+              <br>
+              <span>ИД босса - <%= empl.boss_id %></span>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% else %>
+    <div class="card border-danger mb-3">
+      <div class="card-body text-danger">
+        <p class="card-text">Сотрудники не найдены</p>
+      </div>
+    </div>
+  <% end %>
+<% end %>
