@@ -15,3 +15,14 @@
 //= require turbolinks
 //= require_tree .
 
+
+function sendRequest(boss_id) {
+    const Http = new XMLHttpRequest();
+    const url='/employees/json/' + boss_id ;
+    Http.open("GET", url);
+    Http.setRequestHeader("Content-type", "application/json");
+    Http.send();
+    Http.onreadystatechange=(e)=>{
+        console.log(Http.responseText)
+    }
+}

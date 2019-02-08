@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'employees/index'
+  get 'employees/json/:id/', to: 'employees#showAssistants'
 
   resources :employees
 

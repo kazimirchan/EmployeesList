@@ -1,28 +1,28 @@
 class EmployeesController < ApplicationController
+
+  layout false, :except => [:index, :show]
   def index
     # createEmployees
     showEmployeesList
   end
   def show
-    if params[:remote].present?
-      respond_to do |format|
-        format.html
-        format.json { render :json => {"123" => "1234"} }
-      end
-    elsif params[:id].present?
+    if params[:id].present?
       showEmployeesList
       @employee = Employee.find(params[:id])
       # get assistants method
       getAssistants(params[:id])
+      render :'employees/show'
     else
       @employee = nil
+      render :'employees/index'
     end
   end
   def showAssistants
-    respond_to do |format|
-      format.html
-      format.json { render :json => {"123" => "1234"} }
-    end
+    # respond_to do |format|
+    #   format.html
+    #   format.text
+    # end
+    respond_to :html, :xml, :json
   end
 
 

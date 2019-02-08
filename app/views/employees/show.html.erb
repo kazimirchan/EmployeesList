@@ -11,7 +11,8 @@
     </p>
     <% if @assistants.present? && @assistants.size > 0 %>
       <% @assistants.each do |a| %>
-        <%= link_to a.name, remote: true, action: 'show', boss_id: a.id %>
+        <p id="empl_<%=a.id %>" onclick="sendRequest(<%=a.id %>)"><%= a.name %></p>
+        <%#= link_to a.name, remote: true, action: 'showAssistants'%>
       <% end %>
       <div id="test_div"></div>
     <% else %>
