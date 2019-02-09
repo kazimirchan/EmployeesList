@@ -21,7 +21,7 @@ body {
 }
 
 li.list-group-item:hover .small {
-    color: #17a2b8!important;
+    color: #3c902e!important;
     -webkit-transition: color .2s ease-in 0s;
     -moz-transition: color .2s ease-in 0s;
     -o-transition: color .2s ease-in 0s;
@@ -35,8 +35,9 @@ li.list-group-item:hover .small {
     overflow: scroll;
 }
 
-li.list-group-item .selected {
-
+li.list-group-item.active {
+    background-color: #52c73e47;
+    border-color: rgba(0,0,0,.125);
 }
 
 ul.tree {
