@@ -30,3 +30,7 @@ li.list-group-item:hover .small {
 li.list-group-item .selected {
 
 }
+
+ul.tree {
+    list-style: none;
+}

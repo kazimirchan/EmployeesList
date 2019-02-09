@@ -16,13 +16,64 @@
 //= require_tree .
 
 
-function sendRequest(boss_id) {
-    const Http = new XMLHttpRequest();
-    const url='/employees/json/' + boss_id ;
-    Http.open("GET", url);
-    Http.setRequestHeader("Content-type", "application/json");
-    Http.send();
-    Http.onreadystatechange=(e)=>{
-        console.log(Http.responseText)
+function sendRequest(empl_id) {
+    switch (iconClick(empl_id)) {
+        case true:
+            const Http = new XMLHttpRequest();
+            const url = '/employees/json/' + empl_id;
+            Http.open("GET", url);
+            Http.setRequestHeader("Content-type", "application/json");
+            Http.send();
+            let children;
+            Http.onreadystatechange = (e) => {
+                if (Http.status === 200 && Http.readyState === 4) {
+                    children = JSON.parse(Http.responseText);
+                    let currentNode = document.getElementById('node_' + empl_id);
+                    for (const key in children) {
+                        let childNode = document.createElement('ul');
+                        childNode.className = "tree";
+                        childNode.id = "node_" + children[key]['id'];
+                        childNode.innerHTML = `<li class="node" id=${"node_" + children[key]['id']}>
+                        <p class="m-0 d-inline-block" id=${"empl_" + children[key]['id']} onclick="sendRequest(${children[key]['id']})">
+                            <i class="fas fa-plus"></i>
+                        </p>
+                        <p class="m-0 d-inline-block">${children[key]['name']}</p></li>`;
+                            currentNode.appendChild(childNode);
+                    }
+                }
+            };
+            break;
+        case false:
+            let currentNode = document.getElementById('node_' + empl_id);
+            let chID = [];
+            for (const key in currentNode.children) {
+                if (currentNode.children[key].tagName === "UL") {
+                    chID[key] = currentNode.children[key].id;
+                }
+            }
+            chID.forEach( (el) => {
+                currentNode.removeChild(document.getElementById(el));
+            });
+            break;
+        case -1:
+            console.log('another error');
+            break;
+
+    }
+}
+
+/*
+@return true: should get assistants, else: should remove assistants from DOM; -1 - another error
+ */
+function iconClick(id) {
+    let pic = document.getElementById("empl_" + id);
+    if (pic.childNodes[0].className === "fas fa-plus") {
+        pic.childNodes[0].className = "fas fa-minus";
+        return true;
+    } else if (pic.childNodes[0].className === "fas fa-minus") {
+        pic.childNodes[0].className = "fas fa-plus";
+        return false;
+    } else {
+        return -1;
     }
 }

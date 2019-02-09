@@ -11,7 +11,12 @@
     </p>
     <% if @assistants.present? && @assistants.size > 0 %>
       <% @assistants.each do |a| %>
-        <p id="empl_<%=a.id %>" onclick="sendRequest(<%=a.id %>)"><%= a.name %></p>
+        <ul class="tree">
+          <li class="node" id="node_<%= a.id %>">
+            <p class="m-0 d-inline-block" id="empl_<%= a.id %>" onclick="sendRequest(<%=a.id %>)"><i class="fas fa-plus"></i></p>
+            <p class="m-0 d-inline-block"><%= a.name %></p>
+          </li>
+        </ul>
         <%#= link_to a.name, remote: true, action: 'showAssistants'%>
       <% end %>
       <div id="test_div"></div>
@@ -25,9 +30,6 @@
 
 
 <% content_for :employees_list do %>
-  <% params.each do |par| %>
-    <span><%=par %></span>
-  <% end %>
   <% if @employees %>
     <div class="my-3 card">
       <div class="card-header">

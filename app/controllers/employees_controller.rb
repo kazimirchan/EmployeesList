@@ -11,18 +11,13 @@ class EmployeesController < ApplicationController
       @employee = Employee.find(params[:id])
       # get assistants method
       getAssistants(params[:id])
-      render :'employees/show'
     else
       @employee = nil
-      render :'employees/index'
     end
   end
   def showAssistants
-    # respond_to do |format|
-    #   format.html
-    #   format.text
-    # end
-    respond_to :html, :xml, :json
+    respond_to :json
+    render json: getAssistants(params[:id])
   end
 
 
@@ -31,13 +26,13 @@ class EmployeesController < ApplicationController
   private
   def createEmployees
     # @employee = Employee.new(name:'Иванов Иван Иванович')
-    @employee = Employee.new(name:'Петров Сергей 2', boss_id: 2)
+    @employee = Employee.new(name:'Петров Сергей test', boss_id: 5)
     @employee.save
   end
   def showEmployeesList
     @employees = Employee.all
   end
   def getAssistants(employee_id)
-    @assistants = Employee.where('boss_id = ' + employee_id).all
+    @assistants = Employee.where('boss_id = ' + employee_id).all.order("name ASC")
   end
 end
