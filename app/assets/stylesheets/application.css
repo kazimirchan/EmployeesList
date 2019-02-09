@@ -13,6 +13,9 @@
  *= require_tree .
  *= require_self
  */
+html, body, .container, .row {
+    height: 100%;
+}
 body {
     background-color: #f6f5f3!important;
 }
@@ -25,6 +28,11 @@ li.list-group-item:hover .small {
     transition: color .2s ease-in 0s;
     cursor: pointer;
     text-decoration: none;
+}
+
+.card.list {
+    height: 100%;
+    overflow: scroll;
 }
 
 li.list-group-item .selected {

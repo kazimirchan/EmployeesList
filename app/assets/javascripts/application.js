@@ -34,11 +34,11 @@ function sendRequest(empl_id) {
                         childNode.className = "tree";
                         childNode.id = "node_" + children[key]['id'];
                         childNode.innerHTML = `<li class="node" id=${"node_" + children[key]['id']}>
-                        <p class="m-0 d-inline-block" id=${"empl_" + children[key]['id']} onclick="sendRequest(${children[key]['id']})">
-                            <i class="fas fa-plus"></i>
-                        </p>
-                        <p class="m-0 d-inline-block">${children[key]['name']}</p></li>`;
-                            currentNode.appendChild(childNode);
+                                <p class="m-0 d-inline-block" id=${"empl_" + children[key]['id']} onclick="sendRequest(${children[key]['id']})">
+                                    <i class="fas fa-plus"></i>
+                                </p>
+                                <p class="m-0 d-inline-block">${children[key]['name']}</p></li>`;
+                        currentNode.appendChild(childNode);
                     }
                 }
             };
@@ -51,12 +51,12 @@ function sendRequest(empl_id) {
                     chID[key] = currentNode.children[key].id;
                 }
             }
-            chID.forEach( (el) => {
+            chID.forEach((el) => {
                 currentNode.removeChild(document.getElementById(el));
             });
             break;
         case -1:
-            console.log('another error');
+            // console.log('another error');
             break;
 
     }
@@ -67,11 +67,11 @@ function sendRequest(empl_id) {
  */
 function iconClick(id) {
     let pic = document.getElementById("empl_" + id);
-    if (pic.childNodes[0].className === "fas fa-plus") {
-        pic.childNodes[0].className = "fas fa-minus";
+    if (pic.firstElementChild.className === "fas fa-plus") {
+        pic.firstElementChild.className = "fas fa-minus";
         return true;
-    } else if (pic.childNodes[0].className === "fas fa-minus") {
-        pic.childNodes[0].className = "fas fa-plus";
+    } else if (pic.firstElementChild.className === "fas fa-minus") {
+        pic.firstElementChild.className = "fas fa-plus";
         return false;
     } else {
         return -1;

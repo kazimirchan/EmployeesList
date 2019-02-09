@@ -1,37 +1,40 @@
 <% content_for :employee_assistants do %>
   <% if @employee.present? %>
-    <p>
-      <strong>Title:</strong>
-      <%= @employee.id %>
-    </p>
-
-    <p>
-      <strong>Text:</strong>
-      <%= @employee.name %>
-    </p>
-    <% if @assistants.present? && @assistants.size > 0 %>
-      <% @assistants.each do |a| %>
-        <ul class="tree">
-          <li class="node" id="node_<%= a.id %>">
-            <p class="m-0 d-inline-block" id="empl_<%= a.id %>" onclick="sendRequest(<%=a.id %>)"><i class="fas fa-plus"></i></p>
-            <p class="m-0 d-inline-block"><%= a.name %></p>
-          </li>
-        </ul>
-        <%#= link_to a.name, remote: true, action: 'showAssistants'%>
-      <% end %>
-      <div id="test_div"></div>
-    <% else %>
-      <p>assistants array is empty now</p>
-    <% end %>
+    <ul class="tree">
+      <li class="node" id="node_<%= @employee.id %>">
+        <p class="m-0 d-inline-block" id="empl_<%= @employee.id %>" onclick="sendRequest(<%= @employee.id %>)">
+          <i class="fas fa-minus"></i>
+        </p>
+        <p class="m-0 d-inline-block"><%= @employee.name %></p>
+        <% if @assistants.present? && @assistants.size > 0 %>
+          <% @assistants.each do |a| %>
+            <ul class="tree" id="node_<%= a.id %>">
+              <li class="node" id="node_<%= a.id %>">
+                <p class="m-0 d-inline-block" id="empl_<%= a.id %>" onclick="sendRequest(<%=a.id %>)">
+                  <i class="fas fa-plus"></i></p>
+                <p class="m-0 d-inline-block"><%= a.name %></p>
+              </li>
+            </ul>
+            <%#= link_to a.name, remote: true, action: 'showAssistants'%>
+          <% end %>
+          <%# else %>
+          <!--          <div class="card border-info my-3">-->
+          <!--            <div class="card-body text-info">-->
+          <!--              <p class="card-text">У данного сотрудника нет подчиненных</p>-->
+          <!--            </div>-->
+          <!--          </div>-->
+        <% end %>
+      </li>
+    </ul>
   <% else %>
-    <p>error</p>
+<!--    <p>Сотрудник не выбран</p>-->
   <% end %>
 <% end %>
 
 
 <% content_for :employees_list do %>
   <% if @employees %>
-    <div class="my-3 card">
+    <div class="card list">
       <div class="card-header">
         <h6 class="my-1">Выберите сотрудника из списка ниже:</h6>
       </div>
@@ -42,8 +45,6 @@
               <strong id="<%= empl.id %>" class="d-block text-gray-dark"><%= empl.name %></strong>
               <span>ID сотрудника в базе - <%= empl.id %>;</span>
               <br>
-              <span>Число подчиненных - nun</span>
-              <br>
               <span>ИД босса - <%= empl.boss_id %></span>
             </a>
           </li>
@@ -51,10 +52,8 @@
       </ul>
     </div>
   <% else %>
-    <div class="card border-danger mb-3">
-      <div class="card-body text-danger">
-        <p class="card-text">Сотрудники не найдены</p>
-      </div>
+    <div class="card-body">
+      <p class="text-muted text-center m-0">Сотрудники не найдены</p>
     </div>
   <% end %>
 <% end %>
