@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2019_02_06_005215) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "employees", force: :cascade do |t|
     t.string "name"
-    t.string "boss_id"
+    t.integer "boss_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
