@@ -1,5 +1,5 @@
 <% content_for :employee_assistants do %>
-  <% if @employee.present? %>
+  <% if params[:id].present? %>
     <ul class="tree">
       <li class="node" id="node_<%= @employee.id %>">
         <p class="m-0 d-inline-block" id="empl_<%= @employee.id %>" onclick="sendRequest(<%= @employee.id %>)">
@@ -26,8 +26,16 @@
         <% end %>
       </li>
     </ul>
-  <% else %>
-<!--    <p>Сотрудник не выбран</p>-->
+  <% elsif @emplArray.size > 0 %>
+    <% @emplArray.each do |empl| %>
+      <ul class="tree" id="node_<%= empl.id %>">
+        <li class="node" id="node_<%= empl.id %>">
+          <p class="m-0 d-inline-block" id="empl_<%= empl.id %>" onclick="sendRequest(<%=empl.id %>)">
+            <i class="fas fa-plus"></i></p>
+          <p class="m-0 d-inline-block"><%= empl.name %></p>
+        </li>
+      </ul>
+    <% end %>
   <% end %>
 <% end %>
 

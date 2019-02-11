@@ -1,18 +1,19 @@
 class EmployeesController < ApplicationController
 
-  layout false, :except => [:index, :show]
+  layout false, :except => :show
 
   def index
-    # createEmployees
-    showEmployeesList
+    show
   end
-
   def show
+    # createEmployees
     showEmployeesList
     if params[:id].present?
       @employee = Employee.find(params[:id])
       # get assistants method
       getAssistants(params[:id])
+    else
+      @emplArray = Employee.where('boss_id is null').all.order("name ASC")
     end
   end
 
@@ -26,7 +27,9 @@ class EmployeesController < ApplicationController
 
   def createEmployees
     # @employee = Employee.new(name:'Иванов Иван Иванович')
-    @employee = Employee.new(name: 'Петров Сергей test', boss_id: 5)
+    @employee = Employee.new(name: 'Петров Сергей test')
+    @employee.save
+    @employee = Employee.new(name: 'Петров Сергей test')
     @employee.save
   end
 
