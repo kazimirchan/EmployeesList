@@ -28,17 +28,22 @@ function sendRequest(empl_id) {
             Http.onreadystatechange = (e) => {
                 if (Http.status === 200 && Http.readyState === 4) {
                     children = JSON.parse(Http.responseText);
-                    let currentNode = document.getElementById('node_' + empl_id);
-                    for (const key in children) {
-                        let childNode = document.createElement('ul');
-                        childNode.className = "tree";
-                        childNode.id = "node_" + children[key]['id'];
-                        childNode.innerHTML = `<li class="node" id=${"node_" + children[key]['id']}>
+                    if (children.length === 0) {
+                        let icon = document.getElementById('empl_'+empl_id);
+                        icon.children[0].style.display = 'none';
+                    } else {
+                        let currentNode = document.getElementById('node_' + empl_id);
+                        for (const key in children) {
+                            let childNode = document.createElement('ul');
+                            childNode.className = "tree";
+                            childNode.id = "node_" + children[key]['id'];
+                            childNode.innerHTML = `<li class="node" id=${"node_" + children[key]['id']}>
                                 <p class="m-0 d-inline-block" id=${"empl_" + children[key]['id']} onclick="sendRequest(${children[key]['id']})">
                                     <i class="fas fa-plus"></i>
                                 </p>
                                 <p class="m-0 d-inline-block">${children[key]['name']}</p></li>`;
-                        currentNode.appendChild(childNode);
+                            currentNode.appendChild(childNode);
+                        }
                     }
                 }
             };
